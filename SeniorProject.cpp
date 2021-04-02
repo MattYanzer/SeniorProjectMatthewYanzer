@@ -74,6 +74,53 @@ virtual bool OnUserUpdate(float fElapsedTime)
 {	
 	//This represents the GAME OVER screen and displays it whenever the player is caught by the threat.
 	srand(time(NULL));
+	if (isTutorialing == true)
+	{
+		while (isTutorialing == true)
+		{
+			for (int x = 0; x < ScreenWidth(); x++)
+			{
+				for (int y = 0; y < ScreenHeight(); y++)
+				{
+					Draw(x, y, PIXEL_SOLID, FG_CYAN);
+				}
+			}
+
+			wstring a = L"Hold the F key while playing to turn on your flashlight.";
+			wstring b = L"Releasing the F key turns your flashlight off.";
+			wstring c = L"Press E while in front of a vending machine to look for change.";
+			wstring d = L"Press E while on top of an emergency pole to ward off the threat if he is near.";
+			wstring e = L"You can also press E to pick up floating keys, open the blue wall, and pick up the sword.";
+			wstring f = L"Run into walls labeled HIDE to hide from the threat.";
+			wstring g = L"Press M to open up your map and keep track of how much change you've found.";
+			wstring h = L"The green moving dot on the map is you.";
+			wstring i = L"The blue moving dot is the key.";
+			wstring j = L"The red moving dot is the threat.";
+			wstring k = L"Press N to put your map away.";
+			wstring l = L"Press B to return to the main menu.";
+			
+			DrawString(25, 20, a);
+			DrawString(25, 22, b);
+			DrawString(25, 24, c);
+			DrawString(25, 26, d);
+			DrawString(25, 28, e);
+			DrawString(25, 30, f);
+			DrawString(25, 32, g);
+			DrawString(25, 34, h);
+			DrawString(25, 36, i);
+			DrawString(25, 38, j);
+			DrawString(25, 40, k);
+			DrawString(25, 42, l);
+			if (m_keys[L'B'].bHeld)
+			{
+				isTutorialing = false;
+				isStarting = true;
+			}
+
+			return true;
+		}
+	}
+	
 	if (isLosing == true)
 	{
 		while (isLosing == true)
@@ -231,16 +278,21 @@ virtual bool OnUserUpdate(float fElapsedTime)
 			//The strings to be displayed
 			wstring title = L"Late Night Snack";
 			wstring instA = L"Press E to begin";
-			
+			wstring instB = L"Press H to read the controls";
 			//Displaying the above three strings
 			DrawString(50, 50, title);
 			DrawString(50, 51, instA);
-		
+			DrawString(50, 52, instB);
 			//If the E key is pressed, the game begins
 			if (m_keys[L'E'].bHeld)
 			{
 				isStarting = false;
 				isPlaying = true;
+			}
+			if (m_keys[L'H'].bHeld)
+			{
+				isStarting = false;
+				isTutorialing = true;
 			}
 
 			return true;
@@ -2172,6 +2224,7 @@ private:
 	bool isStarting = true;
 	bool isWinning = false;
 	bool isLosing = false;
+	bool isTutorialing = false;
 
 	//Variable for determining if the player has a soda
 	bool hasSoda = false;
