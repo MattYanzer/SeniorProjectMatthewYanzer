@@ -150,7 +150,7 @@ virtual bool OnUserUpdate(float fElapsedTime)
 				isLosing = false;
 				isStarting = true;
 				fPlayerX = 1.5f;
-				fPlayerY = 1.5;
+				fPlayerY = 14.5f;
 				fPlayerA = 0.0f;
 
 				fThreatX = 25.5f;
@@ -226,7 +226,7 @@ virtual bool OnUserUpdate(float fElapsedTime)
 				isWinning = false;
 				isStarting = true;
 				fPlayerX = 1.5f;
-				fPlayerY = 1.5f;
+				fPlayerY = 14.5f;
 				fPlayerA = 0.0f;
 
 				fThreatX = 25.5f;
@@ -336,7 +336,7 @@ virtual bool OnUserUpdate(float fElapsedTime)
 				isPaused = false;
 				isStarting = true;
 				fPlayerX = 1.5f;
-				fPlayerY = 1.5f;
+				fPlayerY = 14.5f;
 				fPlayerA = 0.0f;
 
 				fThreatX = 25.5f;
@@ -1737,6 +1737,70 @@ virtual bool OnUserUpdate(float fElapsedTime)
 			//If the E key is pressed, the player can interact with different things in the game
 			if (m_keys[L'E'].bHeld)
 			{
+				// If the player is standing on an alarm and the threat is six tiles away, the threat flees to the opposite corner of the map. Can only be used once per game.
+				if ((int)fPlayerY == 1.0f && (int)fPlayerX == 1.0f && one == true)
+				{
+					for (int i = 1; i <= 6; i++)
+					{
+						if ((1.0f + i) == (int)fThreatY || (1.0f + i) == (int)fThreatX)
+						{
+							fThreatY = 25.0f;
+							fThreatX = 25.0f;
+							north = true;
+						}
+					}
+					one = false;
+					isChasing = false;
+					isPatrolling = true;
+				}
+
+				if ((int)fPlayerY == 25.0f && (int)fPlayerX == 1.0f && two == true)
+				{
+					for (int i = 1; i <= 6; i++)
+					{
+						if ((25.0f - i) == (int)fThreatY || (1.0f + i) == (int)fThreatX)
+						{
+							fThreatY = 1.0f;
+							fThreatX = 25.0f;
+							south = true;
+						}
+					}
+					two = false;
+					isChasing = false;
+					isPatrolling = true;
+				}
+
+				if ((int)fPlayerY == 1.0f && (int)fPlayerX == 25.0f && three == true)
+				{
+					for (int i = 1; i <= 6; i++)
+					{
+						if ((1.0f + i) == (int)fThreatY || (25.0f - i) == (int)fThreatX)
+						{
+							fThreatY = 25.0f;
+							fThreatX = 1.0f;
+							east = true;
+						}
+					}
+					three = false;
+					isChasing = false;
+					isPatrolling = true;
+				}
+
+				if ((int)fPlayerY == 25.0f && (int)fPlayerX == 25.0f && four == true)
+				{
+					for (int i = 1; i <= 6; i++)
+					{
+						if ((25.0f - i) == (int)fThreatY || (25.0f - i) == (int)fThreatX)
+						{
+							fThreatY = 1.0f;
+							fThreatX = 1.0f;
+							west = true;
+						}
+					}
+					one = false;
+					isChasing = false;
+					isPatrolling = true;
+				}
 				//If the player is standing adjacent to a blue vending machine and presses E, 25 cents is added to the player's money count
 				//If the vending machine has already been searched by the player, nothing happens
 				if (map[((int)fPlayerY + 1) * nMapWidth + (int)fPlayerX] == 'A' ||
@@ -1853,74 +1917,6 @@ virtual bool OnUserUpdate(float fElapsedTime)
 			else
 			{
 				fDepth = 10;
-			}
-
-			if (m_keys[L'G'].bHeld)
-			{
-				// If the player is standing on an alarm and the threat is six tiles away, the threat flees to the opposite corner of the map. Can only be used once per game.
-				if ((int)fPlayerY == 1.0f && (int)fPlayerX == 1.0f && one == true)
-				{
-					for (int i = 1; i <= 6; i++)
-					{
-						if ((1.0f + i) == (int)fThreatY || (1.0f + i) == (int)fThreatX)
-						{
-							fThreatY = 25.0f;
-							fThreatX = 25.0f;
-							north = true;
-						}
-					}
-					one = false;
-					isChasing = false;
-					isPatrolling = true;
-				}
-
-				if ((int)fPlayerY == 25.0f && (int)fPlayerX == 1.0f && two == true)
-				{
-					for (int i = 1; i <= 6; i++)
-					{
-						if ((25.0f - i) == (int)fThreatY || (1.0f + i) == (int)fThreatX)
-						{
-							fThreatY = 1.0f;
-							fThreatX = 25.0f;
-							south = true;
-						}
-					}
-					two = false;
-					isChasing = false;
-					isPatrolling = true;
-				}
-
-				if ((int)fPlayerY == 1.0f && (int)fPlayerX == 25.0f && three == true)
-				{
-					for (int i = 1; i <= 6; i++)
-					{
-						if ((1.0f + i) == (int)fThreatY || (25.0f - i) == (int)fThreatX)
-						{
-							fThreatY = 25.0f;
-							fThreatX = 1.0f;
-							east = true;
-						}
-					}
-					three = false;
-					isChasing = false;
-					isPatrolling = true;
-				}
-
-				if ((int)fPlayerY == 25.0f && (int)fPlayerX == 25.0f && four == true)
-				{
-					for (int i = 1; i <= 6; i++)
-					{
-						if ((25.0f - i) == (int)fThreatY || (25.0f - i) == (int)fThreatX)
-						{
-							fThreatY = 1.0f;
-							fThreatX = 1.0f;
-							west = true;
-						}
-					}
-					one = false;
-					isChasing = false;
-					isPatrolling = true;
-				}
 			}
 			
 			//Displaying to the screen
@@ -2276,7 +2272,7 @@ private:
 
 	//Variables for the player's coordinates and direction
 	float fPlayerX = 1.5f;
-	float fPlayerY = 1.5f;
+	float fPlayerY = 14.5f;
 	float fPlayerA = 0.0f;
 
 	//Threat's coordinates
