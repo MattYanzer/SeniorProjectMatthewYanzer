@@ -22,7 +22,6 @@ public:
 
 	virtual bool OnUserCreate()
 	{
-		//the map of the level
 		map += L"#############F#############";//1
 		map += L"#4............G..........1#";//2  1 1
 		map += L"#.############.##########.#";//3
@@ -86,6 +85,7 @@ virtual bool OnUserUpdate(float fElapsedTime)
 				}
 			}
 
+			wstring z = L"WASD to move.";
 			wstring a = L"Hold the F key while playing to turn on your flashlight.";
 			wstring b = L"Releasing the F key turns your flashlight off.";
 			wstring c = L"Press E while in front of a vending machine to look for change.";
@@ -99,6 +99,7 @@ virtual bool OnUserUpdate(float fElapsedTime)
 			wstring k = L"Press N to put your map away.";
 			wstring l = L"Press B to return to the main menu.";
 			
+			DrawString(25, 18, z);
 			DrawString(25, 20, a);
 			DrawString(25, 22, b);
 			DrawString(25, 24, c);
@@ -178,6 +179,7 @@ virtual bool OnUserUpdate(float fElapsedTime)
 				three = true;
 				four = true;
 				isPatrolling = true;
+				isChasing = false;
 				change = true;
 			}
 
@@ -254,6 +256,7 @@ virtual bool OnUserUpdate(float fElapsedTime)
 				three = true;
 				four = true;
 				isPatrolling = true;
+				isChasing = false;
 				change = true;
 			}
 
@@ -364,6 +367,7 @@ virtual bool OnUserUpdate(float fElapsedTime)
 				three = true;
 				four = true;
 				isPatrolling = true;
+				isChasing = false;
 				change = true;
 			}
 
@@ -2246,8 +2250,8 @@ private:
 	//Variables for determining which way the Threat is facing
 	bool north = false;
 	bool south = false;
-	bool east = true;
-	bool west = false;
+	bool east = false;
+	bool west = true;
 
 	//Variables for determining which way the Key is facing
 	bool knorth = false;
@@ -2300,7 +2304,7 @@ private:
 	int nMapWidth = 27;
 
 	//Variable for checking if the map is displayed to the screen
-	bool displayMap;
+	bool displayMap = true;
 
 	//Variable for changing player instructions
 	bool change = true;
